@@ -1,0 +1,96 @@
+HTTP-запросы выполнены проверкой через Python urllib; строки curl показывают эквивалентные команды для ручного повторения. Ответы сервера и вывод Docker сохранены фактически.
+
+Environment: APP_PORT=8082 GREETING="SQLite check"
+$ docker compose -p dz333-sqlite-check -f compose.sqlite.yaml up -d --build
+ Image dz333-sqlite-check-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 512B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 213B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.13-slim
+#3 DONE 0.8s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 103B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 94B done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/python:3.13-slim@sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90
+#6 resolve docker.io/library/python:3.13-slim@sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90 0.0s done
+#6 DONE 0.0s
+
+#7 [3/5] COPY app/requirements.txt .
+#7 CACHED
+
+#8 [2/5] WORKDIR /app
+#8 CACHED
+
+#9 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [5/5] COPY app/app.py .
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:3fcb97c67c2c792ac23677248e75667db047102a9052de593d20f980b1d77f03 done
+#11 exporting config sha256:523b21c1d751c9ed5e4ed918a70a0687d80c128daabd99165ac29703f36a5523 done
+#11 exporting attestation manifest sha256:1cd76433f8c20bfc20364cc4f83a7ee2d74ea2eb7394139b86571e725a009a44 done
+#11 exporting manifest list sha256:5ea2e55c22822ba4b846d0f2da4575d044e7c1cf07c8d1e1c80c8ed37c035e0b done
+#11 naming to docker.io/library/dz333-sqlite-check-app:latest done
+#11 unpacking to docker.io/library/dz333-sqlite-check-app:latest done
+#11 DONE 0.0s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image dz333-sqlite-check-app Built 
+ Network dz333-sqlite-check_default Creating 
+ Volume dz333-sqlite-check_sqlite_data Creating 
+ Volume dz333-sqlite-check_sqlite_data Created 
+ Network dz333-sqlite-check_default Created 
+ Container dz333-sqlite-check-app-1 Creating 
+ Container dz333-sqlite-check-app-1 Created 
+ Container dz333-sqlite-check-app-1 Starting 
+ Container dz333-sqlite-check-app-1 Started
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X GET -w " HTTP %{http_code}" http://127.0.0.1:8082/
+{"greeting": "SQLite check", "count": 0, "hostname": "0267b4a6d795", "storage": "sqlite"} HTTP 200
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X POST -w " HTTP %{http_code}" http://127.0.0.1:8082/increment
+{"greeting": "SQLite check", "count": 1, "hostname": "0267b4a6d795", "storage": "sqlite"} HTTP 200
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X POST -w " HTTP %{http_code}" http://127.0.0.1:8082/increment
+{"greeting": "SQLite check", "count": 2, "hostname": "0267b4a6d795", "storage": "sqlite"} HTTP 200
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X POST -w " HTTP %{http_code}" http://127.0.0.1:8082/increment
+{"greeting": "SQLite check", "count": 3, "hostname": "0267b4a6d795", "storage": "sqlite"} HTTP 200
+$ docker compose -p dz333-sqlite-check -f compose.sqlite.yaml down
+ Container dz333-sqlite-check-app-1 Stopping 
+ Container dz333-sqlite-check-app-1 Stopped 
+ Container dz333-sqlite-check-app-1 Removing 
+ Container dz333-sqlite-check-app-1 Removed 
+ Network dz333-sqlite-check_default Removing 
+ Network dz333-sqlite-check_default Removed
+$ docker compose -p dz333-sqlite-check -f compose.sqlite.yaml up -d
+ Network dz333-sqlite-check_default Creating 
+ Network dz333-sqlite-check_default Created 
+ Container dz333-sqlite-check-app-1 Creating 
+ Container dz333-sqlite-check-app-1 Created 
+ Container dz333-sqlite-check-app-1 Starting 
+ Container dz333-sqlite-check-app-1 Started
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X GET -w " HTTP %{http_code}" http://127.0.0.1:8082/
+{"greeting": "SQLite check", "count": 3, "hostname": "52436db101dc", "storage": "sqlite"} HTTP 200
+$ docker compose -p dz333-sqlite-check -f compose.sqlite.yaml logs --no-color
+app-1  | 2026-11-23 21:11:20,004 listening port=8000 storage=sqlite
+app-1  | 2026-11-23 21:11:20,995 http 172.18.0.1 "GET /readyz HTTP/1.1" 200 -
+app-1  | 2026-11-23 21:11:20,998 http 172.18.0.1 "GET / HTTP/1.1" 200 -
+$ docker compose -p dz333-sqlite-check -f compose.sqlite.yaml down
+ Container dz333-sqlite-check-app-1 Stopping 
+ Container dz333-sqlite-check-app-1 Stopped 
+ Container dz333-sqlite-check-app-1 Removing 
+ Container dz333-sqlite-check-app-1 Removed 
+ Network dz333-sqlite-check_default Removing 
+ Network dz333-sqlite-check_default Removed

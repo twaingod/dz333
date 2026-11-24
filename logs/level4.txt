@@ -1,0 +1,20 @@
+HTTP-запросы выполнены проверкой через Python urllib; строки curl показывают эквивалентные команды для ручного повторения. Ответы сервера и вывод Docker сохранены фактически.
+
+$ docker run -d --name dz333-level4-check -p 127.0.0.1:8081:8000 -e GREETING=Hello from Artem! -e STORAGE=sqlite dz333-counter:local
+595067463be64b85a1ea6787e005915c0929b45b0a83dfed14d69836898e3523
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X GET -w " HTTP %{http_code}" http://127.0.0.1:8081/
+{"greeting": "Hello from Artem!", "count": 0, "hostname": "595067463be6", "storage": "sqlite"} HTTP 200
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X POST -w " HTTP %{http_code}" http://127.0.0.1:8081/increment
+{"greeting": "Hello from Artem!", "count": 1, "hostname": "595067463be6", "storage": "sqlite"} HTTP 200
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X GET -w " HTTP %{http_code}" http://127.0.0.1:8081/
+{"greeting": "Hello from Artem!", "count": 1, "hostname": "595067463be6", "storage": "sqlite"} HTTP 200
+$ docker logs dz333-level4-check
+2026-11-23 21:11:09,849 listening port=8000 storage=sqlite
+2026-11-23 21:11:10,857 http 172.17.0.1 "GET /readyz HTTP/1.1" 200 -
+2026-11-23 21:11:10,860 http 172.17.0.1 "GET / HTTP/1.1" 200 -
+2026-11-23 21:11:10,867 http 172.17.0.1 "POST /increment HTTP/1.1" 200 -
+2026-11-23 21:11:10,869 http 172.17.0.1 "GET / HTTP/1.1" 200 -
+$ docker stop dz333-level4-check
+dz333-level4-check
+$ docker rm dz333-level4-check
+dz333-level4-check

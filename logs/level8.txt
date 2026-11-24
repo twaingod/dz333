@@ -1,0 +1,205 @@
+HTTP-запросы выполнены проверкой через Python urllib; строки curl показывают эквивалентные команды для ручного повторения. Ответы сервера и вывод Docker сохранены фактически.
+
+Environment: APP_PORT=8083 GREETING="Redis check"
+$ docker compose -p dz333-redis-check -f compose.yaml up -d --build --wait --wait-timeout 90
+ Image dz333-redis-check-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 510B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 213B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.13-slim
+#3 DONE 0.3s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 103B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 94B done
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/library/python:3.13-slim@sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90
+#6 resolve docker.io/library/python:3.13-slim@sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90 0.0s done
+#6 DONE 0.0s
+
+#7 [3/5] COPY app/requirements.txt .
+#7 CACHED
+
+#8 [2/5] WORKDIR /app
+#8 CACHED
+
+#9 [4/5] RUN pip install --no-cache-dir -r requirements.txt
+#9 CACHED
+
+#10 [5/5] COPY app/app.py .
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:ad831710a1225bc93f1f677d0bde95c59aa22d0398548b4fcb24ebf8e36b1072 done
+#11 exporting config sha256:63fce28ea5a2fc05f87a49438e2b68fafb2668a061bf76846de7a7e72e109dd2 done
+#11 exporting attestation manifest sha256:c6117b2d0fc0f2e096a039f9fad8a1e8e4b06e2ea6d674a25f46da9ab1b1f4c1 done
+#11 exporting manifest list sha256:11369209183a678327a6ed18b7a007682f6eb5ed203679a062cb9badb215b2bf done
+#11 naming to docker.io/library/dz333-redis-check-app:latest done
+#11 unpacking to docker.io/library/dz333-redis-check-app:latest done
+#11 DONE 0.0s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image dz333-redis-check-app Built 
+ Network dz333-redis-check_default Creating 
+ Volume dz333-redis-check_redis_data Creating 
+ Volume dz333-redis-check_redis_data Created 
+ Network dz333-redis-check_default Created 
+ Container dz333-redis-check-redis-1 Creating 
+ Container dz333-redis-check-redis-1 Created 
+ Container dz333-redis-check-app-1 Creating 
+ Container dz333-redis-check-app-1 Created 
+ Container dz333-redis-check-redis-1 Starting 
+ Container dz333-redis-check-redis-1 Started 
+ Container dz333-redis-check-redis-1 Waiting 
+ Container dz333-redis-check-redis-1 Healthy 
+ Container dz333-redis-check-app-1 Starting 
+ Container dz333-redis-check-app-1 Started 
+ Container dz333-redis-check-app-1 Waiting 
+ Container dz333-redis-check-redis-1 Waiting 
+ Container dz333-redis-check-redis-1 Healthy 
+ Container dz333-redis-check-app-1 Healthy
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X GET -w " HTTP %{http_code}" http://127.0.0.1:8083/
+{"greeting": "Redis check", "count": 0, "hostname": "91fd16138272", "storage": "redis"} HTTP 200
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X POST -w " HTTP %{http_code}" http://127.0.0.1:8083/increment
+{"greeting": "Redis check", "count": 1, "hostname": "91fd16138272", "storage": "redis"} HTTP 200
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X POST -w " HTTP %{http_code}" http://127.0.0.1:8083/increment
+{"greeting": "Redis check", "count": 2, "hostname": "91fd16138272", "storage": "redis"} HTTP 200
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X POST -w " HTTP %{http_code}" http://127.0.0.1:8083/increment
+{"greeting": "Redis check", "count": 3, "hostname": "91fd16138272", "storage": "redis"} HTTP 200
+$ docker compose -p dz333-redis-check -f compose.yaml down
+ Container dz333-redis-check-app-1 Stopping 
+ Container dz333-redis-check-app-1 Stopped 
+ Container dz333-redis-check-app-1 Removing 
+ Container dz333-redis-check-app-1 Removed 
+ Container dz333-redis-check-redis-1 Stopping 
+ Container dz333-redis-check-redis-1 Stopped 
+ Container dz333-redis-check-redis-1 Removing 
+ Container dz333-redis-check-redis-1 Removed 
+ Network dz333-redis-check_default Removing 
+ Network dz333-redis-check_default Removed
+$ docker compose -p dz333-redis-check -f compose.yaml up -d --wait --wait-timeout 90
+ Network dz333-redis-check_default Creating 
+ Network dz333-redis-check_default Created 
+ Container dz333-redis-check-redis-1 Creating 
+ Container dz333-redis-check-redis-1 Created 
+ Container dz333-redis-check-app-1 Creating 
+ Container dz333-redis-check-app-1 Created 
+ Container dz333-redis-check-redis-1 Starting 
+ Container dz333-redis-check-redis-1 Started 
+ Container dz333-redis-check-redis-1 Waiting 
+ Container dz333-redis-check-redis-1 Healthy 
+ Container dz333-redis-check-app-1 Starting 
+ Container dz333-redis-check-app-1 Started 
+ Container dz333-redis-check-app-1 Waiting 
+ Container dz333-redis-check-redis-1 Waiting 
+ Container dz333-redis-check-redis-1 Healthy 
+ Container dz333-redis-check-app-1 Healthy
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X GET -w " HTTP %{http_code}" http://127.0.0.1:8083/
+{"greeting": "Redis check", "count": 3, "hostname": "0febd22b28b3", "storage": "redis"} HTTP 200
+$ docker compose -p dz333-redis-check -f compose.yaml ps -q app
+0febd22b28b3f2e6ca5cf4a94ab3aea34d1aefb3951cfae0d3e488e03e4d7ed2
+$ docker compose -p dz333-redis-check -f compose.yaml stop redis
+ Container dz333-redis-check-redis-1 Stopping 
+ Container dz333-redis-check-redis-1 Stopped
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X GET -w " HTTP %{http_code}" http://127.0.0.1:8083/healthz
+{"status": "alive"} HTTP 200
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X GET -w " HTTP %{http_code}" http://127.0.0.1:8083/readyz
+{"error": "storage_unavailable"} HTTP 503
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X POST -w " HTTP %{http_code}" http://127.0.0.1:8083/increment
+{"error": "storage_unavailable"} HTTP 503
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X GET -w " HTTP %{http_code}" http://127.0.0.1:8083/
+{"error": "storage_unavailable"} HTTP 503
+$ docker compose -p dz333-redis-check -f compose.yaml start redis
+ Container dz333-redis-check-redis-1 Starting 
+ Container dz333-redis-check-redis-1 Started
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X GET -w " HTTP %{http_code}" http://127.0.0.1:8083/
+{"greeting": "Redis check", "count": 3, "hostname": "0febd22b28b3", "storage": "redis"} HTTP 200
+Эквивалент HTTP-запроса: curl --max-time 5 -sS -X POST -w " HTTP %{http_code}" http://127.0.0.1:8083/increment
+{"greeting": "Redis check", "count": 4, "hostname": "0febd22b28b3", "storage": "redis"} HTTP 200
+$ docker compose -p dz333-redis-check -f compose.yaml ps -q app
+0febd22b28b3f2e6ca5cf4a94ab3aea34d1aefb3951cfae0d3e488e03e4d7ed2
+Application container ID unchanged: OK
+$ docker compose -p dz333-redis-check -f compose.yaml ps
+NAME                        IMAGE                   COMMAND                  SERVICE   CREATED          STATUS                                     PORTS
+dz333-redis-check-app-1     dz333-redis-check-app   "python app.py"          app       14 seconds ago   Up 8 seconds (healthy)                     127.0.0.1:8083->8000/tcp
+dz333-redis-check-redis-1   redis:7.4-alpine        "docker-entrypoint.s…"   redis     14 seconds ago   Up Less than a second (health: starting)   6379/tcp
+$ docker compose -p dz333-redis-check -f compose.yaml exec -T redis redis-cli CONFIG GET appendonly
+appendonly
+yes
+$ docker compose -p dz333-redis-check -f compose.yaml logs --no-color
+app-1  | 2026-11-23 21:11:44,949 listening port=8000 storage=redis
+app-1  | 2026-11-23 21:11:49,874 http 127.0.0.1 "GET /readyz HTTP/1.1" 200 -
+app-1  | 2026-11-23 21:11:49,896 http 172.18.0.1 "GET / HTTP/1.1" 200 -
+app-1  | 2026-11-23 21:11:50,166 http 172.18.0.1 "GET /healthz HTTP/1.1" 200 -
+app-1  | 2026-11-23 21:11:51,177 storage_unavailable: TimeoutError
+app-1  | 2026-11-23 21:11:51,178 http 172.18.0.1 "GET /readyz HTTP/1.1" 503 -
+app-1  | 2026-11-23 21:11:52,188 storage_unavailable: TimeoutError
+app-1  | 2026-11-23 21:11:52,188 http 172.18.0.1 "POST /increment HTTP/1.1" 503 -
+app-1  | 2026-11-23 21:11:53,198 storage_unavailable: TimeoutError
+app-1  | 2026-11-23 21:11:53,198 http 172.18.0.1 "GET / HTTP/1.1" 503 -
+app-1  | 2026-11-23 21:11:53,320 http 172.18.0.1 "GET /readyz HTTP/1.1" 200 -
+app-1  | 2026-11-23 21:11:53,321 http 172.18.0.1 "GET / HTTP/1.1" 200 -
+app-1  | 2026-11-23 21:11:53,322 http 172.18.0.1 "POST /increment HTTP/1.1" 200 -
+redis-1  | 1:C 23 Nov 2026 21:11:39.811 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 23 Nov 2026 21:11:39.811 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 23 Nov 2026 21:11:39.811 * Configuration loaded
+redis-1  | 1:M 23 Nov 2026 21:11:39.811 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 23 Nov 2026 21:11:39.811 * Running mode=standalone, port=6379.
+redis-1  | 1:M 23 Nov 2026 21:11:39.811 * Server initialized
+redis-1  | 1:M 23 Nov 2026 21:11:39.812 * Reading RDB base file on AOF loading...
+redis-1  | 1:M 23 Nov 2026 21:11:39.812 * Loading RDB produced by version 7.4.12
+redis-1  | 1:M 23 Nov 2026 21:11:39.812 * RDB age 14 seconds
+redis-1  | 1:M 23 Nov 2026 21:11:39.812 * RDB memory usage when created 0.94 Mb
+redis-1  | 1:M 23 Nov 2026 21:11:39.812 * RDB is base AOF
+redis-1  | 1:M 23 Nov 2026 21:11:39.812 * Done loading RDB, keys loaded: 0, keys expired: 0.
+redis-1  | 1:M 23 Nov 2026 21:11:39.812 * DB loaded from base file appendonly.aof.1.base.rdb: 0.000 seconds
+redis-1  | 1:M 23 Nov 2026 21:11:39.812 * DB loaded from incr file appendonly.aof.1.incr.aof: 0.000 seconds
+redis-1  | 1:M 23 Nov 2026 21:11:39.812 * DB loaded from append only file: 0.000 seconds
+redis-1  | 1:M 23 Nov 2026 21:11:39.812 * Opening AOF incr file appendonly.aof.1.incr.aof on server start
+redis-1  | 1:M 23 Nov 2026 21:11:39.812 * Ready to accept connections tcp
+redis-1  | 1:signal-handler (1795468310) Received SIGTERM scheduling shutdown...
+redis-1  | 1:M 23 Nov 2026 21:11:50.086 * User requested shutdown...
+redis-1  | 1:M 23 Nov 2026 21:11:50.086 * Calling fsync() on the AOF file.
+redis-1  | 1:M 23 Nov 2026 21:11:50.086 * Saving the final RDB snapshot before exiting.
+redis-1  | 1:M 23 Nov 2026 21:11:50.088 * DB saved on disk
+redis-1  | 1:M 23 Nov 2026 21:11:50.088 # Redis is now ready to exit, bye bye...
+redis-1  | 1:C 23 Nov 2026 21:11:53.315 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 23 Nov 2026 21:11:53.315 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 23 Nov 2026 21:11:53.315 * Configuration loaded
+redis-1  | 1:M 23 Nov 2026 21:11:53.316 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 23 Nov 2026 21:11:53.316 * Running mode=standalone, port=6379.
+redis-1  | 1:M 23 Nov 2026 21:11:53.316 * Server initialized
+redis-1  | 1:M 23 Nov 2026 21:11:53.317 * Reading RDB base file on AOF loading...
+redis-1  | 1:M 23 Nov 2026 21:11:53.317 * Loading RDB produced by version 7.4.12
+redis-1  | 1:M 23 Nov 2026 21:11:53.317 * RDB age 28 seconds
+redis-1  | 1:M 23 Nov 2026 21:11:53.317 * RDB memory usage when created 0.94 Mb
+redis-1  | 1:M 23 Nov 2026 21:11:53.317 * RDB is base AOF
+redis-1  | 1:M 23 Nov 2026 21:11:53.317 * Done loading RDB, keys loaded: 0, keys expired: 0.
+redis-1  | 1:M 23 Nov 2026 21:11:53.317 * DB loaded from base file appendonly.aof.1.base.rdb: 0.000 seconds
+redis-1  | 1:M 23 Nov 2026 21:11:53.317 * DB loaded from incr file appendonly.aof.1.incr.aof: 0.000 seconds
+redis-1  | 1:M 23 Nov 2026 21:11:53.317 * DB loaded from append only file: 0.000 seconds
+redis-1  | 1:M 23 Nov 2026 21:11:53.317 * Opening AOF incr file appendonly.aof.1.incr.aof on server start
+redis-1  | 1:M 23 Nov 2026 21:11:53.317 * Ready to accept connections tcp
+$ docker compose -p dz333-redis-check -f compose.yaml down
+ Container dz333-redis-check-app-1 Stopping 
+ Container dz333-redis-check-app-1 Stopped 
+ Container dz333-redis-check-app-1 Removing 
+ Container dz333-redis-check-app-1 Removed 
+ Container dz333-redis-check-redis-1 Stopping 
+ Container dz333-redis-check-redis-1 Stopped 
+ Container dz333-redis-check-redis-1 Removing 
+ Container dz333-redis-check-redis-1 Removed 
+ Network dz333-redis-check_default Removing 
+ Network dz333-redis-check_default Removed
+All level 4, 6, 8 checks passed. Volumes kept.
